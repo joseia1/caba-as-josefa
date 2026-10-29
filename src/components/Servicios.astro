@@ -1,0 +1,26 @@
+---
+import { servicios } from '../data/contenido.js';
+---
+
+<section id="servicios" class="w-full py-20 bg-surface-container-low">
+  <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary block mb-2 font-semibold">Comodidades Pensadas en Ti</span>
+      <h2 class="font-display-md text-display-md-mobile md:text-display-md text-primary tracking-tight">Experiencia y Servicios</h2>
+      <p class="font-body-md text-body-md text-on-surface-variant mt-3">
+        Todo lo necesario para sentirte como en casa mientras disfrutas del aire marino y los encantos naturales de la comuna de Quintero.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {servicios.map((s) => (
+        <div class="bg-surface p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+          <div class={`w-12 h-12 rounded-lg flex items-center justify-center mb-5 ${s.fondo}`}>
+            <span class="material-symbols-outlined text-[26px]">{s.icono}</span>
+          </div>
+          <h3 class="font-headline-sm text-headline-sm text-primary mb-2">{s.titulo}</h3>
+          <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">{s.texto}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

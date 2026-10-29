@@ -1,0 +1,39 @@
+---
+import { sitio, instagramUrl } from '../data/sitio.js';
+import { fotosInstagram } from '../data/contenido.js';
+---
+
+<section id="instagram" class="w-full py-20 lg:py-24 bg-surface">
+  <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-ocean-muted block mb-2">Comunidad &amp; Recuerdos</span>
+        <h2 class="font-display-md text-display-md-mobile md:text-display-md text-primary tracking-tight">Síguenos en Instagram</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+          Fotos reales de nuestras cabañas, la piscina y el entorno. Revisa disponibilidad y novedades en
+          <a class="text-secondary font-semibold hover:underline" href={instagramUrl} rel="noopener noreferrer" target="_blank">@{sitio.instagram}</a>.
+        </p>
+      </div>
+      <a
+        class="inline-flex items-center gap-2 bg-surface-container hover:bg-sand-soft text-primary font-label-lg text-label-lg px-5 py-2.5 rounded-lg transition-colors w-fit"
+        href={instagramUrl}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+        <span>@{sitio.instagram}</span>
+        <span class="material-symbols-outlined text-[16px]">arrow_outward</span>
+      </a>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {fotosInstagram.map((foto) => (
+        <a class="group relative rounded-xl overflow-hidden aspect-square shadow-sm bg-surface-container" href={instagramUrl} rel="noopener noreferrer" target="_blank">
+          <img alt={foto.alt} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src={foto.src} loading="lazy" />
+          <div class="absolute inset-0 bg-primary/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-on-primary">
+            <span class="material-symbols-outlined text-[32px]">favorite</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

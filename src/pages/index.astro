@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Cabanas from '../components/Cabanas.astro';
+import Servicios from '../components/Servicios.astro';
+import Instagram from '../components/Instagram.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+import ModalCabana from '../components/ModalCabana.astro';
+---
+
+<Layout>
+  <Header />
+  <main class="w-full">
+    <Hero />
+    <Cabanas />
+    <Servicios />
+    <Instagram />
+    <Contacto />
+  </main>
+  <Footer />
+  <ModalCabana />
+</Layout>
+
+<script src="../scripts/reservas.js"></script>

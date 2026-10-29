@@ -1,0 +1,113 @@
+---
+import { sitio, whatsappUrl } from '../data/sitio.js';
+import { cabanas } from '../data/cabanas.js';
+
+const campo = 'w-full bg-sand-soft/40 text-on-surface px-4 py-3 rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-primary';
+const etiqueta = 'font-label-sm text-label-sm text-on-surface-variant block mb-1';
+---
+
+<section class="w-full py-20 lg:py-28 bg-surface-container-low" id="contacto">
+  <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
+      <!-- Datos de contacto y ubicación -->
+      <div class="lg:col-span-5 flex flex-col">
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-ocean-muted block mb-2 font-semibold">Reserva Directa por WhatsApp</span>
+        <h2 class="font-display-md text-display-md-mobile md:text-display-md text-primary tracking-tight mb-4">Planifica tu escapada a Quintero</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed">
+          Escríbenos por WhatsApp para consultar disponibilidad y valores. Las reservas se gestionan solo por WhatsApp; no respondemos mensajes directos en redes sociales.
+        </p>
+        <div class="space-y-4 mb-8">
+          <a class="flex items-center gap-4 p-4 rounded-xl bg-surface shadow-sm hover:shadow-md transition-shadow" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">
+            <div class="w-12 h-12 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[24px]">chat</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-label-md text-primary">WhatsApp</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant">{sitio.whatsappVisible}</span>
+            </div>
+          </a>
+          <a class="flex items-center gap-4 p-4 rounded-xl bg-surface shadow-sm hover:shadow-md transition-shadow" href={`mailto:${sitio.email}`}>
+            <div class="w-12 h-12 rounded-lg bg-sea-foam text-primary flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[24px]">mail</span>
+            </div>
+            <div class="flex flex-col min-w-0">
+              <span class="font-label-md text-label-md text-primary">Correo</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant break-all">{sitio.email}</span>
+            </div>
+          </a>
+          <a class="flex items-center gap-4 p-4 rounded-xl bg-surface shadow-sm hover:shadow-md transition-shadow" href={sitio.mapsUrl} target="_blank" rel="noopener noreferrer">
+            <div class="w-12 h-12 rounded-lg bg-sand-soft text-ocean-muted flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-[24px]">pin_drop</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-label-md text-label-md text-primary">Ubicación</span>
+              <span class="font-body-sm text-body-sm text-on-surface-variant">{sitio.ubicacion}</span>
+            </div>
+          </a>
+        </div>
+        <div class="w-full h-56 rounded-xl overflow-hidden shadow-sm bg-surface-container">
+          <iframe
+            src={sitio.mapsEmbed}
+            title="Mapa de Quintero"
+            class="w-full h-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Formulario de reserva -->
+      <div class="lg:col-span-7 bg-surface p-8 sm:p-10 rounded-2xl shadow-xl">
+        <h3 class="font-headline-md text-headline-md text-primary mb-2">Formulario de Reserva</h3>
+        <p class="font-body-sm text-body-sm text-on-surface-variant mb-6">
+          Completa tus datos y fechas. Al enviar se abrirá WhatsApp con tu solicitud lista para mandar.
+        </p>
+        <form class="space-y-4" id="form-reserva">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="reserva-nombre" class={etiqueta}>Nombre Completo</label>
+              <input class={campo} id="reserva-nombre" name="nombre" placeholder="Ej. Camila Morales" required type="text" autocomplete="name" />
+            </div>
+            <div>
+              <label for="reserva-telefono" class={etiqueta}>Teléfono o WhatsApp</label>
+              <input class={campo} id="reserva-telefono" name="telefono" placeholder="+56 9 1234 5678" required type="tel" autocomplete="tel" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="reserva-cabana" class={etiqueta}>Tipo de Cabaña</label>
+              <select class={campo} id="reserva-cabana" name="cabana">
+                {cabanas.map((c) => (
+                  <option value={`${c.nombre} (${c.capacidad})`}>{c.nombre} ({c.capacidad})</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label for="reserva-huespedes" class={etiqueta}>Nº de Huéspedes</label>
+              <input class={campo} id="reserva-huespedes" name="huespedes" max="6" min="1" required type="number" value="2" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="reserva-llegada" class={etiqueta}>Fecha de Llegada</label>
+              <input class:list={[campo, 'campo-fecha']} id="reserva-llegada" name="llegada" required type="date" />
+            </div>
+            <div>
+              <label for="reserva-salida" class={etiqueta}>Fecha de Salida</label>
+              <input class:list={[campo, 'campo-fecha']} id="reserva-salida" name="salida" required type="date" />
+            </div>
+          </div>
+          <div>
+            <label for="reserva-notas" class={etiqueta}>Comentarios o Consultas (Opcional)</label>
+            <textarea class={campo} id="reserva-notas" name="notas" placeholder="¿Viajas con niños? ¿Tienes alguna consulta especial?" rows="3"></textarea>
+          </div>
+          <div class="hidden p-3 rounded-lg bg-sea-foam text-primary text-body-sm font-body-sm" id="reserva-mensaje" role="status"></div>
+          <button class="w-full bg-secondary hover:bg-secondary-container text-on-secondary hover:text-on-secondary-container py-4 rounded-lg font-label-lg text-label-lg transition-all shadow-md hover:-translate-y-0.5 flex items-center justify-center gap-2" type="submit">
+            <span class="material-symbols-outlined text-[20px]">send</span>
+            Enviar Solicitud por WhatsApp
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,97 @@
+---
+import { sitio, menu } from '../data/sitio.js';
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-md shadow-[0_1px_8px_rgba(30,58,75,0.06)]">
+  <div class="h-20 w-full px-margin-mobile md:px-margin flex items-center justify-between">
+    <a href="#inicio" class="flex items-center gap-space-sm">
+      <img alt={`Logo ${sitio.nombre}`} class="h-8 w-auto object-contain" src={sitio.logo} />
+      <div class="flex flex-col">
+        <span class="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">{sitio.nombre}</span>
+        <span class="font-label-sm text-label-sm text-ocean-muted tracking-wider uppercase mt-1">{sitio.subtitulo}</span>
+      </div>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-space-lg" aria-label="Principal">
+      {menu.map((item) => (
+        <a
+          class="nav-link font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3 rounded-lg"
+          data-seccion={item.id}
+          href={`#${item.id}`}
+        >
+          {item.texto}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-space-md">
+      <a
+        class="hidden sm:inline-flex items-center justify-center bg-secondary hover:bg-secondary-container text-on-secondary hover:text-on-secondary-container font-label-lg text-label-lg px-space-md py-2.5 rounded-lg transition-all shadow-[0_2px_8px_rgba(144,76,51,0.18)] hover:-translate-y-0.5"
+        href="#contacto"
+      >
+        Reservar Ahora
+      </a>
+      <button
+        id="btn-menu"
+        class="lg:hidden w-10 h-10 rounded-lg flex items-center justify-center text-primary hover:bg-surface-container"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="menu-movil"
+      >
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </div>
+
+  <nav id="menu-movil" class="hidden lg:hidden border-t border-sand-soft bg-surface px-margin-mobile py-space-md" aria-label="Menú móvil">
+    <ul class="flex flex-col gap-1">
+      {menu.map((item) => (
+        <li>
+          <a class="block py-3 px-3 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container" href={`#${item.id}`}>
+            {item.texto}
+          </a>
+        </li>
+      ))}
+      <li class="sm:hidden pt-2">
+        <a class="block text-center bg-secondary text-on-secondary font-label-lg text-label-lg py-3 rounded-lg" href="#contacto">Reservar Ahora</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const boton = document.getElementById('btn-menu');
+  const menuMovil = document.getElementById('menu-movil');
+
+  function cerrarMenu() {
+    menuMovil.classList.add('hidden');
+    boton.setAttribute('aria-expanded', 'false');
+  }
+
+  boton.addEventListener('click', () => {
+    const abierto = !menuMovil.classList.toggle('hidden');
+    boton.setAttribute('aria-expanded', String(abierto));
+  });
+  menuMovil.querySelectorAll('a').forEach((a) => a.addEventListener('click', cerrarMenu));
+
+  // Resalta en el menú la sección visible
+  const activas = ['bg-primary-container', 'text-on-primary'];
+  const enlaces = document.querySelectorAll('.nav-link');
+  const observador = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (!entrada.isIntersecting) return;
+        enlaces.forEach((a) => {
+          const activo = a.dataset.seccion === entrada.target.id;
+          activas.forEach((c) => a.classList.toggle(c, activo));
+          a.classList.toggle('text-on-surface-variant', !activo);
+        });
+      });
+    },
+    { rootMargin: '-40% 0px -55% 0px' }
+  );
+  enlaces.forEach((a) => {
+    const seccion = document.getElementById(a.dataset.seccion);
+    if (seccion) observador.observe(seccion);
+  });
+</script>

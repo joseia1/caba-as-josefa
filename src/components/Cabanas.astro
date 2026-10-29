@@ -1,0 +1,118 @@
+---
+import { cabanas, formatoPrecio } from '../data/cabanas.js';
+import { whatsappUrl } from '../data/sitio.js';
+
+const filtros = [
+  { id: 'todas', texto: 'Todas' },
+  { id: 'parejas', texto: '2-3 Personas' },
+  { id: 'familia', texto: '5-6 Personas' },
+];
+---
+
+<section class="w-full py-20 lg:py-28 bg-surface" id="cabanas">
+  <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+      <div>
+        <span class="font-label-sm text-label-sm uppercase tracking-widest text-ocean-muted block mb-2">Hospedaje &amp; Naturaleza</span>
+        <h2 class="font-display-md text-display-md-mobile md:text-display-md text-primary tracking-tight">Nuestras Cabañas</h2>
+        <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mt-3">
+          5 cabañas totalmente equipadas, con capacidad de 2 hasta 6 personas. Todas con acceso a la piscina temperada.
+        </p>
+      </div>
+      <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filtrar cabañas">
+        {filtros.map((f, i) => (
+          <button
+            class:list={[
+              'filtro-cabana px-4 py-2 rounded-full text-label-md font-label-md transition-colors',
+              i === 0 ? 'bg-primary text-on-primary' : 'bg-surface-container text-on-surface-variant hover:text-primary',
+            ]}
+            data-filtro={f.id}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.texto}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+      {cabanas.map((c) => (
+        <article
+          class="tarjeta-cabana flex flex-col bg-surface-container-lowest rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group"
+          data-categoria={c.categoria}
+        >
+          <div class="relative aspect-[4/3] overflow-hidden">
+            <img alt={c.alt} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src={c.imagen} loading="lazy" />
+            <div class="absolute top-4 left-4 bg-primary/80 backdrop-blur-md text-on-primary text-label-sm font-label-sm px-3 py-1 rounded-full">
+              {c.capacidad}
+            </div>
+            <div class="absolute top-4 right-4 bg-sand-soft/90 backdrop-blur-md text-primary text-label-sm font-label-sm px-2.5 py-1 rounded-full flex items-center gap-1">
+              <span class="material-symbols-outlined text-[14px]">{c.etiqueta.icono}</span>
+              {c.etiqueta.texto}
+            </div>
+          </div>
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="font-headline-md text-headline-md text-primary">{c.nombre}</h3>
+            <span class="font-label-lg text-label-lg text-secondary mb-2">
+              {c.precio ? (
+                <>{formatoPrecio(c.precio)} <span class="font-body-sm text-body-sm text-on-surface-variant font-normal">/ noche</span></>
+              ) : (
+                'Consultar precio'
+              )}
+            </span>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-6">{c.descripcion}</p>
+            <div class="grid grid-cols-2 xl:grid-cols-1 gap-2 text-body-sm font-body-sm text-on-surface-variant mb-6 pb-6 border-b border-sand-soft">
+              {c.caracteristicas.map((car) => (
+                <span class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px] text-ocean-muted">{car.icono}</span>
+                  {car.texto}
+                </span>
+              ))}
+            </div>
+            <div class="mt-auto flex items-center gap-3">
+              <button
+                class="btn-consultar flex-1 bg-primary hover:bg-primary-container text-on-primary py-2.5 rounded-lg text-label-md font-label-md text-center transition-colors"
+                data-nombre={c.nombre}
+                data-capacidad={c.capacidad}
+              >
+                Consultar Disponibilidad
+              </button>
+              <a
+                class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary hover:bg-sand-soft transition-colors"
+                href={whatsappUrl(`Hola, me interesa la ${c.nombre}`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Preguntar por WhatsApp"
+                aria-label={`Preguntar por WhatsApp por ${c.nombre}`}
+              >
+                <span class="material-symbols-outlined text-[20px]">chat</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const botones = document.querySelectorAll<HTMLButtonElement>('.filtro-cabana');
+  const tarjetas = document.querySelectorAll<HTMLElement>('.tarjeta-cabana');
+
+  botones.forEach((boton) => {
+    boton.addEventListener('click', () => {
+      const filtro = boton.dataset.filtro;
+      botones.forEach((b) => {
+        const activo = b === boton;
+        b.classList.toggle('bg-primary', activo);
+        b.classList.toggle('text-on-primary', activo);
+        b.classList.toggle('bg-surface-container', !activo);
+        b.classList.toggle('text-on-surface-variant', !activo);
+        b.setAttribute('aria-pressed', String(activo));
+      });
+      tarjetas.forEach((t) => {
+        t.style.display = filtro === 'todas' || t.dataset.categoria === filtro ? '' : 'none';
+      });
+    });
+  });
+</script>

@@ -1,0 +1,114 @@
+---
+import { whatsappUrl } from '../data/sitio.js';
+import { imagenHero } from '../data/contenido.js';
+
+const destacados = [
+  { valor: '5', texto: 'Cabañas' },
+  { valor: '2 a 6', texto: 'Personas por cabaña' },
+  { valor: 'Piscina', texto: 'Temperada' },
+  { valor: 'Full', texto: 'Equipadas' },
+];
+---
+
+<section id="inicio" class="relative w-full pt-24 pb-16 lg:pb-24 overflow-hidden bg-surface-container-low">
+  <div class="w-full px-margin-mobile md:px-margin max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center pt-8">
+      <!-- Texto -->
+      <div class="lg:col-span-6 flex flex-col z-10 pr-0 lg:pr-6">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-sea-foam text-primary text-label-sm font-label-sm uppercase tracking-wider mb-6 w-fit shadow-sm">
+          <span class="material-symbols-outlined text-[16px] text-ocean-muted">waves</span>
+          <span>Quintero · Región de Valparaíso</span>
+        </div>
+        <h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-primary tracking-tight leading-tight mb-6">
+          Tu descanso con <span class="italic font-light text-secondary">vista al mar</span> en Quintero.
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed mb-8 max-w-xl">
+          Cinco cabañas totalmente equipadas, con piscina temperada y vista al mar, a pocas cuadras de las playas de Quintero. Para parejas, familias y grupos de hasta 6 personas.
+        </p>
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm mb-10">
+          <a
+            class="inline-flex items-center justify-center gap-2 bg-secondary hover:bg-secondary-container text-on-secondary hover:text-on-secondary-container font-label-lg text-label-lg px-6 py-4 rounded-lg shadow-md hover:-translate-y-0.5 transition-all text-center"
+            href={whatsappUrl()}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span class="material-symbols-outlined text-[20px]">chat</span>
+            Contactar por WhatsApp
+          </a>
+          <a
+            class="inline-flex items-center justify-center gap-2 bg-surface text-primary hover:bg-surface-container font-label-lg text-label-lg px-6 py-4 rounded-lg shadow-sm transition-all text-center"
+            href="#cabanas"
+          >
+            <span class="material-symbols-outlined text-[20px] text-ocean-muted">cottage</span>
+            Ver Cabañas Disponibles
+          </a>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-sand-soft/60">
+          {destacados.map((d) => (
+            <div class="flex flex-col">
+              <span class="font-headline-sm text-headline-sm text-primary">{d.valor}</span>
+              <span class="font-label-sm text-label-sm text-ocean-muted">{d.texto}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Imagen -->
+      <div class="lg:col-span-6 relative mt-8 lg:mt-0">
+        <div class="relative rounded-2xl overflow-hidden shadow-xl aspect-[16/11]">
+          <img alt="Cabañas Josefa: cabañas de dos pisos con terrazas alrededor de la piscina" class="w-full h-full object-cover" src={imagenHero} fetchpriority="high" />
+          <div class="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-on-primary sm:left-auto sm:max-w-[45%] sm:text-right">
+            <p class="font-label-sm text-label-sm uppercase tracking-wider text-sea-foam mb-1">Cabañas Josefa</p>
+            <p class="font-headline-sm text-headline-sm leading-none">Piscina temperada &amp; vista al mar</p>
+          </div>
+        </div>
+        <div class="hidden sm:flex absolute -bottom-6 -left-6 bg-surface p-4 rounded-xl shadow-lg items-center gap-3 max-w-xs">
+          <div class="w-12 h-12 rounded-lg bg-sea-foam flex items-center justify-center text-primary flex-shrink-0">
+            <span class="material-symbols-outlined text-[24px]">spa</span>
+          </div>
+          <div>
+            <p class="font-label-md text-label-md text-primary">Ambiente tranquilo</p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant">Descanso en familia · No se permiten fiestas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cotizador rápido -->
+    <div class="mt-14 -mb-8 relative z-20 bg-surface rounded-xl p-4 sm:p-6 shadow-xl">
+      <form class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end" id="form-cotizar">
+        <div class="flex flex-col">
+          <label for="cotizar-llegada" class="font-label-sm text-label-sm text-ocean-muted mb-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">calendar_today</span>
+            Fecha de Llegada
+          </label>
+          <input class="campo-fecha w-full bg-sand-soft/50 text-on-surface px-3 py-2.5 rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-primary" id="cotizar-llegada" name="llegada" required type="date" />
+        </div>
+        <div class="flex flex-col">
+          <label for="cotizar-salida" class="font-label-sm text-label-sm text-ocean-muted mb-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">event_repeat</span>
+            Fecha de Salida
+          </label>
+          <input class="campo-fecha w-full bg-sand-soft/50 text-on-surface px-3 py-2.5 rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-primary" id="cotizar-salida" name="salida" required type="date" />
+        </div>
+        <div class="flex flex-col">
+          <label for="cotizar-huespedes" class="font-label-sm text-label-sm text-ocean-muted mb-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">group</span>
+            Huéspedes
+          </label>
+          <select class="w-full bg-sand-soft/50 text-on-surface px-3 py-2.5 rounded-lg text-body-md font-body-md focus:outline-none focus:ring-2 focus:ring-primary" id="cotizar-huespedes" name="huespedes">
+            <option value="2 personas">2 Personas (Parejas)</option>
+            <option value="2 adultos + 1 menor">2 Adultos + 1 Menor</option>
+            <option selected value="hasta 5 personas">Hasta 5 Personas</option>
+            <option value="hasta 6 personas">Hasta 6 Personas</option>
+          </select>
+        </div>
+        <button class="w-full bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg py-3 rounded-lg flex items-center justify-center gap-2 shadow-sm transition-all hover:-translate-y-0.5" type="submit">
+          <span class="material-symbols-outlined text-[18px]">search</span>
+          Cotizar Estadía
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

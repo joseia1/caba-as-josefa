@@ -1,0 +1,63 @@
+---
+import { sitio, menu, instagramUrl, whatsappUrl } from '../data/sitio.js';
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="w-full bg-surface-container-low text-on-surface pt-space-xl pb-space-lg shadow-[0_-1px_12px_rgba(30,58,75,0.03)]">
+  <div class="w-full max-w-7xl mx-auto px-margin-mobile md:px-margin grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter mb-space-xl">
+    <div>
+      <div class="flex items-center gap-space-xs mb-space-sm">
+        <img alt={`Logo ${sitio.nombre}`} class="h-7 w-auto object-contain" src={sitio.logo} loading="lazy" />
+        <span class="font-headline-sm text-headline-sm text-primary">{sitio.nombre}</span>
+      </div>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-md">{sitio.descripcion}</p>
+      <div class="flex items-center gap-space-sm">
+        <a class="w-10 h-10 rounded-full bg-sand-soft flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href={instagramUrl} rel="noopener noreferrer" target="_blank" aria-label="Instagram">
+          <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+        </a>
+        <a class="w-10 h-10 rounded-full bg-sand-soft flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href={whatsappUrl()} rel="noopener noreferrer" target="_blank" aria-label="WhatsApp">
+          <span class="material-symbols-outlined text-[20px]">chat</span>
+        </a>
+        <a class="w-10 h-10 rounded-full bg-sand-soft flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-colors" href={sitio.facebookUrl} rel="noopener noreferrer" target="_blank" aria-label="Facebook">
+          <span class="material-symbols-outlined text-[20px]">thumb_up</span>
+        </a>
+      </div>
+    </div>
+    <div>
+      <h3 class="font-headline-sm text-headline-sm text-primary mb-space-sm">Navegación</h3>
+      <ul class="space-y-space-xs font-body-md text-body-md text-on-surface-variant">
+        {menu.map((item) => (
+          <li><a class="hover:text-primary transition-colors" href={`#${item.id}`}>{item.texto}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h3 class="font-headline-sm text-headline-sm text-primary mb-space-sm">Ubicación</h3>
+      <p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-space-xs">{sitio.ubicacion}</p>
+      <a class="font-body-sm text-body-sm text-ocean-muted hover:text-primary flex items-center gap-1 mt-space-sm" href={sitio.mapsUrl} target="_blank" rel="noopener noreferrer">
+        <span class="material-symbols-outlined text-[18px]">pin_drop</span>A pocas cuadras de la playa
+      </a>
+    </div>
+    <div>
+      <h3 class="font-headline-sm text-headline-sm text-primary mb-space-sm">Contacto</h3>
+      <ul class="space-y-space-xs font-body-md text-body-md text-on-surface-variant">
+        <li>
+          <span class="font-label-md text-label-md text-on-surface block">WhatsApp:</span>
+          <a class="hover:text-primary" href={whatsappUrl()} target="_blank" rel="noopener noreferrer">{sitio.whatsappVisible}</a>
+        </li>
+        <li>
+          <span class="font-label-md text-label-md text-on-surface block mt-space-xs">Correo:</span>
+          <a class="hover:text-primary break-all" href={`mailto:${sitio.email}`}>{sitio.email}</a>
+        </li>
+        <li>
+          <span class="font-label-md text-label-md text-on-surface block mt-space-xs">Normas:</span>
+          {sitio.normas.join(' · ')}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-full max-w-7xl mx-auto px-margin-mobile md:px-margin pt-space-md border-t border-sand-soft text-center sm:text-left text-on-surface-variant font-body-sm text-body-sm">
+    <span>© {anio} {sitio.nombre} Quintero. Todos los derechos reservados.</span>
+  </div>
+</footer>
